@@ -10,14 +10,18 @@
 
 #define WINDOW_HEIGHT 32
 #define WINDOW_WIDTH 64
-#define SCALE_FACTOR 20
 
 typedef struct {
   SDL_Window *window;
   SDL_Renderer *renderer;
+  uint32_t fg_color;
+  uint32_t bg_color;
   uint8_t scale_factor;
-} sdl_t;
+} sdl_e;
 
-extern bool sdl_start(sdl_t *sdl);
+bool sdl_start(sdl_e *sdl);
+bool clear_screen(sdl_e *sdl);
+bool key_input(void);
+void sdl_cleanup(sdl_e *sdl);
 
 #endif
