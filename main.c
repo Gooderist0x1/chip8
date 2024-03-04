@@ -1,6 +1,5 @@
 #include "chip8.h"
 #include "sdl_utils.h"
-#include <SDL2/SDL_events.h>
 
 typedef struct {
   uint8_t scale_factor;
@@ -26,9 +25,11 @@ void apply_config(config_e *config, sdl_e *sdl) {
   sdl->bg_color = config->bg_Color;
 }
 
-int main(int argc, char **argv) {
-  (void)argc;
-  (void)argv;
+int main(int argc, char *argv[]) {
+  if (!(argc > 1)) {
+    printf("Usage: %s <ROM name>\n", argv[0]);
+    return 1;
+  }
 
   // create variables
   sdl_e sdl = {0};
@@ -36,10 +37,14 @@ int main(int argc, char **argv) {
   chip8_e chip8 = {0};
 
   // use created variables to
+
   create_config(&config);
   apply_config(&config, &sdl);
   sdl_start(&sdl);
-  chip8_init(&chip8);
+  if (!chip8_init(&chip8, argv[1])) {
+    sdl_cleanup(&sdl);
+    return 1;
+  }
   chip8_loop(&chip8, &sdl);
   return 0;
 }

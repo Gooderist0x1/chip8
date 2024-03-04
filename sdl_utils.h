@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_audio.h>
 #include <SDL2/SDL_events.h>
+#include <SDL2/SDL_keycode.h>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_video.h>
@@ -19,9 +20,12 @@ typedef struct {
   uint8_t scale_factor;
 } sdl_e;
 
+typedef enum { RUNNING, PAUSED, QUIT } state_e;
+
 bool sdl_start(sdl_e *sdl);
 bool clear_screen(sdl_e *sdl);
-bool key_input(void);
+bool key_input(state_e *state, bool *keypad);
+void update_screen(sdl_e *sdl, bool display[64 * 32]);
 void sdl_cleanup(sdl_e *sdl);
 
 #endif
