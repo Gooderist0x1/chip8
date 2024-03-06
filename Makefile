@@ -5,8 +5,8 @@ OBJDIR=./build/
 
 CC=gcc
 CFLAGS=-Wall -Wextra -g $(foreach D, $(INCLUDE),-I$(D)) $(DEPFLAGS)
-DEPFLAGS=-MP -MD -lSDL2 
-LDFLAGS= -lSDL2
+DEPFLAGS=-MP -MD -lSDL2 -DDEBUG
+LDFLAGS=-lSDL2 -g
 CFILES=$(foreach D,$(CODEDIR),$(wildcard $(D)/*.c))
 OBJS=$(patsubst %.c,%.o,$(CFILES))
 DEPFILES=$(patsubst %.c,%.d,$(CFILES))

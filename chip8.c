@@ -5,7 +5,7 @@ void chip8_instructions(chip8_e *chip8) {
   uint16_t instruction =
       (chip8->ram[chip8->PC] << 8 | chip8->ram[chip8->PC + 1]);
   uint8_t opcode = (instruction >> 12) & 0x000F;
-  //  printf("instruction: 0x%4X, opcocde: 0x%1X\n", instruction, opcode);
+  // printf("instruction: 0x%4X, opcocde: 0x%1X\n", instruction, opcode);
   chip8->PC += 2;
   chip8->NNN = instruction & 0x0FFF;
   chip8->NN = instruction & 0x00FF;
@@ -51,7 +51,7 @@ void chip8_instructions(chip8_e *chip8) {
     chip8->V[chip8->X] += chip8->NN;
     break;
   case 0x8:
-    if (chip8->N == 0) {
+    if (chip8->N == 0x0) {
       chip8->V[chip8->X] = chip8->V[chip8->Y];
     } else if (chip8->N == 0x1) {
       chip8->V[chip8->X] |= chip8->V[chip8->Y];
@@ -105,7 +105,7 @@ void chip8_instructions(chip8_e *chip8) {
     srand(time(NULL));
     chip8->V[chip8->X] = rand() % 256 & chip8->NN;
     break;
-  case 0xD: {
+    case 0xD: {
     uint8_t x_coord = chip8->V[chip8->X] % 64;
     uint8_t y_coord = chip8->V[chip8->Y] % 32;
     uint8_t safe_x = x_coord;
@@ -212,6 +212,8 @@ bool chip8_loop(chip8_e *chip8, sdl_e *sdl) {
     const double start_time = SDL_GetPerformanceCounter();
     for (int i = 0; i < (700 / 60); i++) {
       chip8_instructions(chip8);
+
+      // printf("delay: %d\n", chip8->delay);
     }
     const double end_time = SDL_GetPerformanceCounter();
     const double total_time = (double)((end_time - start_time) * 1000) /

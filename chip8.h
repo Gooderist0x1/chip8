@@ -25,9 +25,9 @@ typedef struct {
   uint8_t N;
   uint8_t X;
   uint8_t Y;
-  uint8_t V[0xF];
-  uint8_t delay;
   uint8_t sound;
+  uint8_t V[16];
+  uint8_t delay;
 } chip8_e;
 
 bool chip8_loop(chip8_e *chip8, sdl_e *sdl);
